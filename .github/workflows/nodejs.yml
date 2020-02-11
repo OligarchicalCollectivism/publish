@@ -1,0 +1,20 @@
+name: Node.js CI
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    # build pages with node.js
+    - uses: actions/setup-node@v1
+      with:
+        node-version: '13.x'
+    - run: npm install
+    - run: npm run build
+    # deploy github pages
+    - uses: peaceiris/actions-gh-pages@v3
+      with:
+        deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
+        publish_dir: ./public
